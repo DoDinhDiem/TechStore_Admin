@@ -1,0 +1,42 @@
+/* You can add global styles to this file, and also import other style files */
+.p-accordion .p-accordion-header .p-accordion-header-link {
+    height: 37px;
+    width: 101px;
+    background-color: #1d4e89 !important;
+    color: #eee;
+    font-weight: 700;
+    border-radius: 6px;
+}
+
+.p-accordion
+    .p-accordion-header:not(.p-disabled).p-highlight
+    .p-accordion-header-link {
+    color: #fff !important;
+}
+.p-accordion
+    .p-accordion-header:not(.p-highlight):not(.p-disabled):hover
+    .p-accordion-header-link {
+    color: #fff;
+}
+.p-accordion .p-accordion-content {
+    width: 101px;
+    padding: 0.25rem 0;
+    border: none !important;
+}
+
+.p-dropdown {
+    position: static !important;
+}
+
+$gutter: 1rem; //for primeflex grid system
+@import "assets/layout/styles/layout/layout.scss";
+
+/* PrimeNG */
+@import "../node_modules/primeng/resources/primeng.min.css";
+@import "../node_modules/primeflex/primeflex.scss";
+@import "../node_modules/primeicons/primeicons.css";
+
+/* Demos */
+@import "assets/demo/styles/flags/flags.css";
+@import "assets/demo/styles/badges.scss";
+@import "assets/demo/styles/code.scss";
