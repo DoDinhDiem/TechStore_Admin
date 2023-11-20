@@ -6,7 +6,7 @@ import { baseUrl } from 'src/app/Http/baseUrl';
 @Injectable({
     providedIn: 'root'
 })
-export class AnhspService {
+export class AnhService {
     constructor(private http: HttpClient) { }
     getAll(id: any): Observable<any[]> {
         return this.http.get<any[]>(baseUrl + 'AnhSanPham/GetAll_AnhSanPham/' + id)

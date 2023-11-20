@@ -1,5 +1,6 @@
 export interface ISanpham {
     id?: number;
+    anhDaiDien?: string;
     tenSanPham?: string;
     giaBan?: number;
     khuyenMai?: number;

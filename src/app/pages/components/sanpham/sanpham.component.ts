@@ -4,8 +4,10 @@ import { SanphamService } from '../../service/sanpham.service';
 import { ISanpham } from '../../api/sanpham';
 import { LoaiService } from '../../service/loai.service';
 import { IAnh } from '../../api/anhSanPham';
-import { AnhspService } from '../../service/anhsp.service';
+import { IThongSo } from '../../api/thongso';
+import { AnhService } from '../../service/anh.service';
 import { HangService } from '../../service/hang.service';
+import { ThongsoService } from '../../service/thongso.service';
 
 interface action {
     value: boolean;
@@ -43,7 +45,7 @@ export class SanphamComponent {
     loai: any[] = [];
     selectedLoaiId: any;
 
-    //select và hiển ở table của hãng 
+    //select và hiển ở table của 
     hang: any[] = [];
     selectedHangId: any;
 
@@ -53,9 +55,6 @@ export class SanphamComponent {
     maxGiaBan: any = "";
 
     //Ảnh sản phẩm 
-    anhSP!: IAnh;
-    anhSPs!: IAnh[];
-
     fileOnly: any
     selectedFiles: any[];
     sequenceNumber = 0;
@@ -68,6 +67,8 @@ export class SanphamComponent {
         private sanphamService: SanphamService,
         private loaiService: LoaiService,
         private hangService: HangService,
+        private anhService: AnhService,
+        private thongsoService: ThongsoService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
     ) { }
@@ -140,7 +141,7 @@ export class SanphamComponent {
     //Xóa nhiều
     deleteSelected() {
         this.confirmationService.confirm({
-            message: 'Bạn có chắc chắn muốn xóa các hãng sản phẩm đã chọn?',
+            message: 'Bạn có chắc chắn muốn xóa các sản phẩm đã chọn?',
             header: 'Thông báo',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
@@ -148,9 +149,24 @@ export class SanphamComponent {
                     const ids = this.selecteds.map((sanpham) => sanpham.id as number);
                     this.sanphamService.deleteMany(ids).subscribe((res) => {
                         this.loadData(this.keyword, this.minGiaBan, this.maxGiaBan);
-                        this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
+                        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
                     });
                 }
+            }
+        });
+    }
+
+    //Xóa 1 sản phẩm
+    deleteOnly(sanpham: ISanpham) {
+        this.confirmationService.confirm({
+            message: 'Bạn có chắc chắn muốn xóa ' + sanpham.tenSanPham + '?',
+            header: 'Thông báo',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.sanphamService.delete(sanpham.id!).subscribe((res) => {
+                    this.loadData(this.keyword, this.minGiaBan, this.maxGiaBan);
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                })
             }
         });
     }
@@ -166,7 +182,6 @@ export class SanphamComponent {
                 this.selectedLoaiId = this.loai.find(option => option.name == data.loaiId);
                 this.selectedHangId = this.hang.find(option => option.name == data.anhSanXuatId);
                 this.selectedFiles = data.anhSanPhamList.map(item => ({ name: item.duongDanAnh }));
-                this.fileOnly = data.anhSanPhamOnly.map(item => ({ name: item.duongDanAnh }));
                 this.productParameters = data.thongSos.map(item => ({ tenThongSo: item.tenThongSo, moTa: item.moTa }))
                 this.Dialog = true;
                 this.Save = "Cập nhập";
@@ -174,24 +189,10 @@ export class SanphamComponent {
         )
     }
 
-    //Xóa 1 sản phẩm
-    deleteOnly(sanpham: ISanpham) {
-        this.confirmationService.confirm({
-            message: 'Bạn có chắc chắn muốn xóa ' + sanpham.tenSanPham + '?',
-            header: 'Thông báo',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.sanphamService.delete(sanpham.id!).subscribe((res) => {
-                    this.loadData(this.keyword, this.minGiaBan, this.maxGiaBan);
-                    this.messageService.add({ severity: 'success', summary: 'Successful', detail: res.message, life: 3000 });
-                })
-            }
-        });
-    }
+
 
     //Đóng dialog sản phẩm
     hidenDialog() {
-
         this.Dialog = false;
         this.sanpham = {};
         this.submitted = false;
@@ -201,21 +202,13 @@ export class SanphamComponent {
     save() {
         //Ảnh sản phẩm
         this.sanpham.anhSanPhams = [];
-        for (let i = 0; i < this.fileOnly.length; i++) {
-            const file = this.fileOnly[i];
-            const img = {
-                duongDanAnh: file.name,
-                trangThai: true
-            };
-            this.sanpham.anhSanPhams.push(img);
-
-        }
         for (let i = 0; i < this.selectedFiles.length; i++) {
             const file = this.selectedFiles[i];
             const img = {
                 duongDanAnh: file.name,
                 trangThai: false
             };
+
             this.sanpham.anhSanPhams.push(img);
 
         }
@@ -228,6 +221,7 @@ export class SanphamComponent {
                 moTa: parameter.moTa,
                 trangThai: true
             };
+            console.log(thongSo)
             this.sanpham.thongSos.push(thongSo);
         }
 
@@ -278,7 +272,6 @@ export class SanphamComponent {
             const newName = this.generateNewFileName(file.name);
             return new File([file], newName, { type: file.type });
         });
-        console.log('Chưa cho vào save: ', this.selectedFiles)
     }
 
     generateNewFileName(oldFileName: string): string {
@@ -289,24 +282,12 @@ export class SanphamComponent {
         return newFileName;
     }
     onUpload() {
-        if (this.fileOnly && this.fileOnly.length > 0) {
-            this.sanphamService.uploadFiles(this.fileOnly).subscribe({
-                next: response => {
-                    console.log('Upload ảnh đại diện thành công', response);
-                },
-                error: err => {
-                    console.error('Lỗi upload', err);
-                }
-            })
-        }
         if (this.selectedFiles && this.selectedFiles.length > 0) {
             this.sanphamService.uploadFiles(this.selectedFiles).subscribe({
 
                 next: response => {
-                    console.log('Upload danh sách ảnh thành công', response);
                 },
                 error: err => {
-                    console.error('Lỗi upload', err);
                 }
             });
         }
@@ -325,6 +306,237 @@ export class SanphamComponent {
     }
 
     //Ảnh sản phẩm
+    DialogImg: boolean = false;
+    DialogImgDetail: boolean = false
+    currentSanphamId: number;
+    anh!: IAnh;
+    anhs!: IAnh[];
+    titleImg = "Quản lý ảnh sản phẩm"
+    selectedImg: IAnh[] | null;
 
+    openImg(sanpham: ISanpham) {
+        this.DialogImg = true
+        this.currentSanphamId = sanpham.id
+        this.loadImg(sanpham.id)
+    }
+
+    loadImg(id: any) {
+        this.anhService.getAll(id).subscribe(data => {
+            this.anhs = data
+        })
+    }
+
+    //Xóa nhiều
+    deleteSelectedImg() {
+        this.confirmationService.confirm({
+            message: 'Bạn có chắc chắn muốn xóa các ảnh sản phẩm đã chọn?',
+            header: 'Thông báo',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                if (this.selectedImg) {
+                    const ids = this.selectedImg.map((anh) => anh.id as number);
+                    this.anhService.deleteMany(ids).subscribe((res) => {
+                        this.loadImg(res.id[0]);
+                        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                    });
+                }
+            }
+        });
+    }
+
+    //Xóa 1 sản phẩm
+    deleteOnlyImg(anh: IAnh) {
+        this.confirmationService.confirm({
+            message: 'Bạn có chắc chắn muốn xóa ' + anh.duongDanAnh + '?',
+            header: 'Thông báo',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.anhService.delete(anh.id!).subscribe((res) => {
+                    this.loadImg(res.id);
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                })
+            }
+        });
+    }
+    toggleTrangThaiImg(anh: IAnh) {
+        this.anhService.toggleTrangThai(anh.id).subscribe((data) => {
+            console.log(data.id)
+            this.loadImg(data.id);
+        });
+    }
+    openImgDetail() {
+        this.fileOnly = [];
+        this.anh = {};
+        this.DialogImgDetail = true
+        this.submitted = false;
+        this.Save = 'Lưu'
+    }
+    hidenDialogImg() {
+
+        this.DialogImgDetail = false;
+        this.anh = {};
+        this.submitted = false;
+    }
+    editImg(anh: IAnh) {
+        this.anhService.getById(anh.id).subscribe(
+            data => {
+
+                this.anh = data;
+                this.shouldDisplayImage = true
+                this.fileOnly = [{ name: data.duongDanAnh }];
+                this.DialogImgDetail = true;
+                this.Save = "Cập nhập";
+            }
+        )
+    }
+    saveImg() {
+        this.anh.sanPhamId = this.currentSanphamId
+        this.anh.duongDanAnh = this.fileOnly[0].name;
+        this.submitted = true;
+        if (this.anh.id) {
+            this.anhService.update(this.anh).subscribe({
+                next: res => {
+                    this.loadImg(this.currentSanphamId);
+                    this.hidenDialogImg();
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                },
+                error: err => {
+                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi', life: 3000 });
+                }
+            })
+        }
+        else {
+            this.anhService.create(this.anh).subscribe({
+                next: res => {
+                    this.loadImg(this.currentSanphamId);
+                    this.hidenDialogImg();
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                },
+                error: err => {
+                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi', life: 3000 });
+                }
+            });
+        }
+    }
+    onUploadImg() {
+        if (this.fileOnly && this.fileOnly.length > 0) {
+            this.sanphamService.uploadFiles(this.fileOnly).subscribe({
+                next: response => {
+                },
+                error: err => {
+                }
+            })
+        }
+    }
+
+    //Thông số sản phẩm
+    thongso!: IThongSo;
+    thongsos!: IThongSo[];
+    DialogParameter: boolean = false;
+    DialogParameterDetail: boolean = false;
+    titleParameter = "Quản lý thông số sản phẩm";
+    selectedParameter: IThongSo[] | null;
+
+    openParameter(sanpham: ISanpham) {
+        this.DialogParameter = true
+        this.currentSanphamId = sanpham.id
+        this.loadParameter(sanpham.id)
+    }
+
+    loadParameter(id: any) {
+        this.thongsoService.getAll(id).subscribe(data => {
+            this.thongsos = data
+        })
+    }
+
+    //Xóa nhiều
+    deleteSelectedParameter() {
+        this.confirmationService.confirm({
+            message: 'Bạn có chắc chắn muốn xóa các thông số sản phẩm đã chọn?',
+            header: 'Thông báo',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                if (this.selectedParameter) {
+                    const ids = this.selectedParameter.map((thongso) => thongso.id as number);
+                    this.thongsoService.deleteMany(ids).subscribe((res) => {
+                        this.loadParameter(res.id[0]);
+                        this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                    });
+                }
+            }
+        });
+    }
+
+    //Xóa 1 sản phẩm
+    deleteOnlyParameter(thongso: IThongSo) {
+        this.confirmationService.confirm({
+            message: 'Bạn có chắc chắn muốn xóa ' + thongso.tenThongSo + '?',
+            header: 'Thông báo',
+            icon: 'pi pi-exclamation-triangle',
+            accept: () => {
+                this.thongsoService.delete(thongso.id!).subscribe((res) => {
+                    this.loadParameter(res.id);
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                })
+            }
+        });
+    }
+    toggleTrangThaiParameter(thongso: IThongSo) {
+        this.thongsoService.toggleTrangThai(thongso.id).subscribe((data) => {
+            this.loadParameter(data.id);
+        });
+    }
+    openParameterDetail() {
+        this.thongso = {};
+        this.DialogParameterDetail = true
+        this.submitted = false;
+        this.Save = 'Lưu'
+    }
+    hidenDialogParameter() {
+        this.DialogParameterDetail = false;
+        this.thongso = {};
+        this.submitted = false;
+    }
+    editParameter(thongso: IThongSo) {
+        this.thongsoService.getById(thongso.id).subscribe(
+            data => {
+                this.thongso = data;
+                this.DialogParameterDetail = true;
+                this.Save = "Cập nhập";
+            }
+        )
+    }
+    saveParameter() {
+        this.thongso.sanPhamId = this.currentSanphamId
+        this.thongso.trangThai = this.selectAction?.value;
+        this.submitted = true;
+        if (this.thongso.id) {
+            this.thongsoService.update(this.thongso).subscribe({
+                next: res => {
+                    this.loadParameter(this.currentSanphamId);
+                    this.hidenDialogParameter();
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                },
+                error: err => {
+                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi', life: 3000 });
+                }
+            })
+        }
+        else {
+            this.thongsoService.create(this.thongso).subscribe({
+                next: res => {
+                    this.loadParameter(this.currentSanphamId);
+                    this.hidenDialogParameter();
+                    this.messageService.add({ severity: 'success', summary: 'Thông báo', detail: res.message, life: 3000 });
+                },
+                error: err => {
+                    this.messageService.add({ severity: 'error', summary: 'Thông báo', detail: 'Lỗi', life: 3000 });
+                }
+            });
+        }
+    }
+    onDialogHide() {
+        this.loadData(this.keyword, this.minGiaBan, this.maxGiaBan);
+    }
 
 }
