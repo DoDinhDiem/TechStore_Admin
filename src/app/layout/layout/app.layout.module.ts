@@ -107,10 +107,14 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { LoaiComponent } from 'src/app/pages/components/loai/loai.component';
 import { HangComponent } from 'src/app/pages/components/hang/hang.component';
 import { SanphamComponent } from 'src/app/pages/components/sanpham/sanpham.component';
+import { RoleComponent } from 'src/app/pages/components/role/role.component';
+import { ChucvuComponent } from 'src/app/pages/components/chucvu/chucvu.component';
 //module
 import { LoaiModule } from 'src/app/pages/components/loai/loai.module';
 import { HangModule } from 'src/app/pages/components/hang/hang.module';
 import { SanphamModule } from 'src/app/pages/components/sanpham/sanpham.module';
+import { RoleModule } from 'src/app/pages/components/role/role.module';
+import { ChucvuModule } from 'src/app/pages/components/chucvu/chucvu.module';
 @NgModule({
     declarations: [
         AppMenuitemComponent,
@@ -122,15 +126,19 @@ import { SanphamModule } from 'src/app/pages/components/sanpham/sanpham.module';
 
         LoaiComponent,
         HangComponent,
-        SanphamComponent
+        SanphamComponent,
+        RoleComponent,
+        ChucvuComponent,
     ],
     imports: [
         //Module
         LoaiModule,
         HangModule,
         SanphamModule,
+        RoleModule,
+        ChucvuModule,
 
-        //
+        //PrimeNG
         BrowserModule,
         AvatarModule,
         AvatarGroupModule,

@@ -429,7 +429,7 @@
                 <div class="field mb-3">
                     <label for="tenThongSo">Tên thông số</label>
                     <input type="text" pInputText id="tenThongSo" [(ngModel)]="thongso.tenThongSo" required autofocus />
-                    <small class="p-error" *ngIf="submitted && !thongso.tenThongSo">Tên thông số là bắt buộc.</small>
+                    <small class="p-error" *ngIf="submitted && thongso.tenThongSo">Tên thông số là bắt buộc.</small>
                 </div>
                 <div class="field mb-3">
                     <label for="moTa">Mô tả</label>

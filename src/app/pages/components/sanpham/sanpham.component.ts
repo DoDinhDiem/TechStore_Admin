@@ -74,6 +74,7 @@ export class SanphamComponent {
     ) { }
 
     ngOnInit(): void {
+
         this.loadData(this.keyword, this.minGiaBan, this.maxGiaBan);
         this.actions = [
             { value: true, name: 'Hiện' },
@@ -85,6 +86,7 @@ export class SanphamComponent {
             { name: 'Sản phẩm hot' },
             { name: 'Sản phẩm Khuyến mại' }
         ]
+
         // this.loadDataImg(this.sanpham)
     }
 
@@ -105,6 +107,7 @@ export class SanphamComponent {
         })
         this.sanphamService.search(keyword, minGiaBan, maxGiaBan).subscribe((data) => {
             this.sanphams = data
+            console.log(data)
         })
     };
 
