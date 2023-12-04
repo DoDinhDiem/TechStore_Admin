@@ -86,8 +86,6 @@ export class SanphamComponent {
             { name: 'Sản phẩm hot' },
             { name: 'Sản phẩm Khuyến mại' }
         ]
-
-        // this.loadDataImg(this.sanpham)
     }
 
 
@@ -107,7 +105,6 @@ export class SanphamComponent {
         })
         this.sanphamService.search(keyword, minGiaBan, maxGiaBan).subscribe((data) => {
             this.sanphams = data
-            console.log(data)
         })
     };
 
@@ -224,7 +221,6 @@ export class SanphamComponent {
                 moTa: parameter.moTa,
                 trangThai: true
             };
-            console.log(thongSo)
             this.sanpham.thongSos.push(thongSo);
         }
 
@@ -363,7 +359,6 @@ export class SanphamComponent {
     }
     toggleTrangThaiImg(anh: IAnh) {
         this.anhService.toggleTrangThai(anh.id).subscribe((data) => {
-            console.log(data.id)
             this.loadImg(data.id);
         });
     }

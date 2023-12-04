@@ -32,15 +32,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Bài viết',
                 items: [
-                    { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
-                    { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
+                    { label: 'Danh mục tin tức', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/danhmuc'] },
+                    { label: 'Tin tức', icon: 'pi pi-fw pi-globe', routerLink: ['/admin/tintuc'] },
                 ]
             },
             {
                 label: 'Con người',
                 items: [
-                    { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
-                    { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
+                    { label: 'Nhân viên', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/nhanvien'] },
+                    { label: 'Khách hàng', icon: 'pi pi-fw pi-globe', routerLink: ['/admin/khachhang'] },
                 ]
             },
             {

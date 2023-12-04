@@ -109,12 +109,20 @@ import { HangComponent } from 'src/app/pages/components/hang/hang.component';
 import { SanphamComponent } from 'src/app/pages/components/sanpham/sanpham.component';
 import { RoleComponent } from 'src/app/pages/components/role/role.component';
 import { ChucvuComponent } from 'src/app/pages/components/chucvu/chucvu.component';
+import { NhansuComponent } from 'src/app/pages/components/nhansu/nhansu.component';
+import { KhachhangComponent } from 'src/app/pages/components/khachhang/khachhang.component';
+import { DanhmuctintucComponent } from 'src/app/pages/components/danhmuctintuc/danhmuctintuc.component';
+import { TinTucComponent } from 'src/app/pages/components/tintuc/tintuc.component';
 //module
 import { LoaiModule } from 'src/app/pages/components/loai/loai.module';
 import { HangModule } from 'src/app/pages/components/hang/hang.module';
 import { SanphamModule } from 'src/app/pages/components/sanpham/sanpham.module';
 import { RoleModule } from 'src/app/pages/components/role/role.module';
 import { ChucvuModule } from 'src/app/pages/components/chucvu/chucvu.module';
+import { NhansuModule } from 'src/app/pages/components/nhansu/nhansu.module';
+import { KhachhangModule } from 'src/app/pages/components/khachhang/khachhang.module';
+import { DanhmuctintucModule } from 'src/app/pages/components/danhmuctintuc/danhmuctintuc.module';
+import { TinTucModule } from 'src/app/pages/components/tintuc/tintuc.module';
 @NgModule({
     declarations: [
         AppMenuitemComponent,
@@ -129,6 +137,10 @@ import { ChucvuModule } from 'src/app/pages/components/chucvu/chucvu.module';
         SanphamComponent,
         RoleComponent,
         ChucvuComponent,
+        NhansuComponent,
+        KhachhangComponent,
+        DanhmuctintucComponent,
+        TinTucComponent
     ],
     imports: [
         //Module
@@ -137,6 +149,10 @@ import { ChucvuModule } from 'src/app/pages/components/chucvu/chucvu.module';
         SanphamModule,
         RoleModule,
         ChucvuModule,
+        NhansuModule,
+        KhachhangModule,
+        DanhmuctintucModule,
+        TinTucModule,
 
         //PrimeNG
         BrowserModule,

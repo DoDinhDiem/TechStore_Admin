@@ -17,8 +17,8 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table [value]="chucvus" [paginator]="true" [rows]="10"
-                [globalFilterFields]="['tenChucVu', 'trangThai', 'createDate', 'updateDate']"
+            <p-table [value]="danhmucs" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['tenDanhMuc', 'trangThai', 'createDate', 'updateDate']"
                 [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
                 currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
                 [showCurrentPageReport]="true" [scrollable]="true">
@@ -37,8 +37,8 @@
                         <th class="text-center" style="width: 4rem;">
                             <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                         </th>
-                        <th class="text-center" pSortableColumn="tenChucVu">Tên
-                            chức vụ<p-sortIcon field="tenChucVu"></p-sortIcon>
+                        <th class="text-center" pSortableColumn="tendanhmuc">Tên
+                            danh mục<p-sortIcon field="tendanhmuc"></p-sortIcon>
                         </th>
                         <th class="text-center" pSortableColumn="trangThai">Ẩn/Hiện<p-sortIcon
                                 field="trangThai"></p-sortIcon>
@@ -46,29 +46,29 @@
                         <th class="text-center">Chức năng</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-chucvu>
+                <ng-template pTemplate="body" let-danhmuc>
                     <tr class="d-flex justify-content-center">
                         <td>
-                            <p-tableCheckbox [value]="chucvu"></p-tableCheckbox>
+                            <p-tableCheckbox [value]="danhmuc"></p-tableCheckbox>
                         </td>
-                        <td class="text-center">{{ chucvu.tenChucVu }}</td>
+                        <td class="text-center">{{ danhmuc.tenDanhMuc }}</td>
                         <td class="text-center">
-                            <p-inputSwitch [(ngModel)]="chucvu.trangThai"
-                                (ngModelChange)="toggleTrangThai(chucvu)"></p-inputSwitch>
+                            <p-inputSwitch [(ngModel)]="danhmuc.trangThai"
+                                (ngModelChange)="toggleTrangThai(danhmuc)"></p-inputSwitch>
                         </td>
                         <td class="text-center">
                             <button pButton pRipple icon="pi pi-pencil" style="margin-right: 5px;"
                                 class="p-button-rounded p-button-success me-2 action-button"
-                                (click)="edit(chucvu)"></button>
+                                (click)="edit(danhmuc)"></button>
                             <button pButton pRipple icon="pi pi-trash"
                                 class="p-button-rounded p-button-warning action-button"
-                                (click)="deleteOnly(chucvu)"></button>
+                                (click)="deleteOnly(danhmuc)"></button>
                         </td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        Tổng cộng có {{ chucvus ? chucvus.length : 0 }} chức vụ.</div>
+                        Tổng cộng có {{ danhmucs ? danhmucs.length : 0 }} danh mục.</div>
                 </ng-template>
             </p-table>
         </div>
@@ -77,9 +77,9 @@
             <ng-template pTemplate="content">
 
                 <div class="field mb-3">
-                    <label for="tenChucVu">Tên chức vụ</label>
-                    <input type="text" pInputText id="tenChucVu" [(ngModel)]="chucvu.tenChucVu" required autofocus />
-                    <small class="p-error" *ngIf="submitted && !chucvu.tenChucVu">Tên chức vụ là bắt buộc.</small>
+                    <label for="tenDanhMuc">Tên danh mục</label>
+                    <input type="text" pInputText id="tenDanhMuc" [(ngModel)]="danhmuc.tenDanhMuc" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !danhmuc.tenDanhMuc">Tên danh mục là bắt buộc.</small>
                 </div>
                 <div class="field mb-3">
                     <label for="trangThai">Trạng thái</label>
