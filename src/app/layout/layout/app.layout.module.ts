@@ -113,6 +113,11 @@ import { NhansuComponent } from 'src/app/pages/components/nhansu/nhansu.componen
 import { KhachhangComponent } from 'src/app/pages/components/khachhang/khachhang.component';
 import { DanhmuctintucComponent } from 'src/app/pages/components/danhmuctintuc/danhmuctintuc.component';
 import { TinTucComponent } from 'src/app/pages/components/tintuc/tintuc.component';
+import { LoginComponent } from 'src/app/pages/components/login/login.component';
+import { HoaDonNhapComponent } from 'src/app/pages/components/hoadonnhap/hoadonnhap.component';
+import { NhaCungCapComponent } from 'src/app/pages/components/nhacungcap/nhacungcap.component';
+
+
 //module
 import { LoaiModule } from 'src/app/pages/components/loai/loai.module';
 import { HangModule } from 'src/app/pages/components/hang/hang.module';
@@ -123,6 +128,9 @@ import { NhansuModule } from 'src/app/pages/components/nhansu/nhansu.module';
 import { KhachhangModule } from 'src/app/pages/components/khachhang/khachhang.module';
 import { DanhmuctintucModule } from 'src/app/pages/components/danhmuctintuc/danhmuctintuc.module';
 import { TinTucModule } from 'src/app/pages/components/tintuc/tintuc.module';
+import { LoginModule } from 'src/app/pages/components/login/login.module';
+import { HoadonnhapModule } from 'src/app/pages/components/hoadonnhap/hoadonnhap.module';
+import { NhacungcapModule } from 'src/app/pages/components/nhacungcap/nhacungcap.module';
 @NgModule({
     declarations: [
         AppMenuitemComponent,
@@ -140,7 +148,11 @@ import { TinTucModule } from 'src/app/pages/components/tintuc/tintuc.module';
         NhansuComponent,
         KhachhangComponent,
         DanhmuctintucComponent,
-        TinTucComponent
+        TinTucComponent,
+        LoginComponent,
+        HoaDonNhapComponent,
+        NhaCungCapComponent,
+
     ],
     imports: [
         //Module
@@ -153,6 +165,9 @@ import { TinTucModule } from 'src/app/pages/components/tintuc/tintuc.module';
         KhachhangModule,
         DanhmuctintucModule,
         TinTucModule,
+        LoginModule,
+        HoadonnhapModule,
+        NhacungcapModule,
 
         //PrimeNG
         BrowserModule,

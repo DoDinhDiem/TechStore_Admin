@@ -7,8 +7,6 @@
                     <button pButton pRipple label="Thêm mới"
                         style="background: #fff; color: #1D4E89; border: 1px solid #1D4E89; margin-right: 5px;"
                         icon="pi pi-plus" class=" button-radius me-2 " (click)="openNew()"></button>
-                    <button pButton pRipple icon="pi pi-trash" class="p-button-danger button-radius"
-                        (click)="deleteSelected()" [disabled]="!selecteds || !selecteds.length"></button>
                 </ng-template>
 
                 <ng-template pTemplate="right">
@@ -17,13 +15,13 @@
                 </ng-template>
             </p-toolbar>
 
-            <p-table [value]="sanphams" [paginator]="true" [rows]="10"
-                [globalFilterFields]="['tenSanPham', 'giaBan', 'khuyenMai', 'soLuonTon', 'baoHanh','trangThaiHoatDong', 'createDate', 'updateDate']"
+            <p-table [value]="hoadonnhaps" [paginator]="true" [rows]="10"
+                [globalFilterFields]="['userId', 'nhaCungCapId', 'tongTien', 'trangThaiThanhToan']"
                 [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
                 currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
                 [showCurrentPageReport]="true" [scrollable]="true">
                 <ng-template pTemplate="caption">
-                    <div class="flex align-items-center justify-content-between">
+                    <!-- <div class="flex align-items-center justify-content-between">
                         <h5 class="m-0">{{ title }}</h5>
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
@@ -48,72 +46,43 @@
                             </p-overlayPanel>
                             <p-button (click)="op.toggle($event)" icon="pi pi-filter"></p-button>
                         </span>
-                    </div>
+                    </div> -->
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr class="text-center">
-                        <th class="text-center" style="width: 4rem;">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+
+                        <th class="text-center" pSortableColumn="giaBan">Người nhập<p-sortIcon
+                                field="giaBan"></p-sortIcon>
                         </th>
-                        <th class="text-center">Ảnh</th>
-                        <th class="text-center" pSortableColumn="tenSanPham">Tên sản phẩm<p-sortIcon
-                                field="tenSanPham"></p-sortIcon>
-                        </th>
-                        <th class="text-center" pSortableColumn="giaBan">Giá bán<p-sortIcon field="giaBan"></p-sortIcon>
-                        </th>
-                        <th class="text-center" pSortableColumn="khuyenMai">Khuyến mại<p-sortIcon
+                        <th class="text-center" pSortableColumn="khuyenMai">Nhà cung cấp<p-sortIcon
                                 field="khuyenMai"></p-sortIcon>
                         </th>
-                        <th class="text-center" pSortableColumn="soLuonTon">Số lượng tồn<p-sortIcon
+                        <th class="text-center" pSortableColumn="soLuonTon">Tổng tiền<p-sortIcon
                                 field="soLuonTon"></p-sortIcon>
                         </th>
-                        <th class="text-center" pSortableColumn="baoHanh">Bảo hành<p-sortIcon
+                        <th class="text-center" pSortableColumn="baoHanh">Trạng thái thanh toán<p-sortIcon
                                 field="baoHanh"></p-sortIcon>
-                        </th>
-                        <th class="text-center" pSortableColumn="moTa">Mô tả<p-sortIcon field="moTa"></p-sortIcon>
-                        </th>
-                        <th class="text-center">Loại sản phẩm</th>
-                        <th class="text-center">Hãng sản phẩm</th>
-                        <th class="text-center">Trạng thái</th>
-                        <th class="text-center" pSortableColumn="trangThaiHoatDong">Ẩn/Hiện<p-sortIcon
-                                field="trangThaiHoatDong"></p-sortIcon>
                         </th>
                         <th class="text-center">Chức năng</th>
                     </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-sanpham>
+                <ng-template pTemplate="body" let-hoadonnhap>
                     <tr style="height: 100px;">
-                        <td class="text-center">
-                            <p-tableCheckbox [value]="sanpham"></p-tableCheckbox>
-                        </td>
-                        <td class="text-center">
-                            <img width="150px" style="box-shadow: 5px 5px 10px 0px #888888;
-                            border-radius: 5px;" src="assets/Uploads/products/{{ sanpham.anhDaiDien }}" alt="">
-                        </td>
-                        <td class="text-center">{{ sanpham.tenSanPham }}</td>
-                        <td class="text-center">{{ sanpham.giaBan | number }}
-                        </td>
-                        <td class="text-center">{{ sanpham.khuyenMai | number }}</td>
-                        <td class="text-center">{{ sanpham.soLuongTon }}</td>
-                        <td class="text-center">{{ sanpham.baoHanh }}</td>
-                        <td class="text-center">{{ sanpham.moTa | slice:0:250 }} ...</td>
-                        <td class="text-center">{{sanpham.loaiId}}</td>
-                        <td class="text-center">{{ sanpham.hangSanXuatId}}</td>
-                        <td class="text-center">{{ sanpham.trangThaiSanPham }}</td>
-                        <td class="text-center">
-                            <p-inputSwitch [(ngModel)]="sanpham.trangThaiHoatDong"
-                                (ngModelChange)="toggleTrangThai(sanpham)"></p-inputSwitch>
-                        </td>
+
+                        <td class="text-center">{{ hoadonnhap.userId }}</td>
+                        <td class="text-center">{{ hoadonnhap.nhaCungCapId }}</td>
+                        <td class="text-center">{{ hoadonnhap.tongTien }}</td>
+                        <td class="text-center">{{ hoadonnhap.trangThaiThanhToan }}</td>
                         <td class="text-center">
                             <p-accordion>
                                 <p-accordionTab header="Action">
-                                    <button pRipple class="button-actioc-many" (click)="edit(sanpham)"><i
+                                    <button pRipple class="button-actioc-many" (click)="edit(hoadonnhap)"><i
                                             class="pi pi-pencil"></i> Sửa</button>
-                                    <button class="button-actioc-many" (click)="deleteOnly(sanpham)"><i
+                                    <button class="button-actioc-many" (click)="deleteOnly(hoadonnhap)"><i
                                             class="pi pi-trash"></i> Xóa</button>
-                                    <button class="button-actioc-many" (click)="openImg(sanpham)"><i
+                                    <button class="button-actioc-many" (click)="openImg(hoadonnhap)"><i
                                             class="pi pi-images"></i> Ảnh</button>
-                                    <button class="button-actioc-many" (click)="openParameter(sanpham)"><i
+                                    <button class="button-actioc-many" (click)="openParameter(hoadonnhap)"><i
                                             class="pi pi-book"></i> Thông số</button>
                                 </p-accordionTab>
                             </p-accordion>
@@ -122,7 +91,7 @@
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        Tổng cộng có {{ sanphams ? sanphams.length : 0 }} sản phẩm.</div>
+                        Tổng cộng có {{ hoadonnhaps ? hoadonnhaps.length : 0 }} sản phẩm.</div>
                 </ng-template>
             </p-table>
         </div>
@@ -130,93 +99,39 @@
             styleClass="p-fluid">
             <ng-template pTemplate="content">
                 <div class="field mb-3">
-                    <label for="tenSanPham">Tên sản phẩm</label>
-                    <input type="text" pInputText id="tenSanPham" [(ngModel)]="sanpham.tenSanPham" required autofocus />
-                    <small class="p-error" *ngIf="submitted && !sanpham.tenSanPham">Tên loại là bắt buộc.</small>
-                </div>
-
-                <div class="field mb-3">
-                    <label for="giaBan">Giá bán</label>
-                    <input type="number" pInputText id="giaBan" [(ngModel)]="sanpham.giaBan" required autofocus />
+                    <label for="baoHanh">Nhà cung cấp</label>
+                    <p-dropdown [options]="nhacungcap" [(ngModel)]="selectedNhaCungCapId" optionLabel="name"
+                        [filter]="true" filterBy="name">
+                    </p-dropdown>
                 </div>
                 <div class="field mb-3">
-                    <label for="khuyenMai">Khuyến mãi</label>
-                    <input type="number" pInputText id="khuyenMai" [(ngModel)]="sanpham.khuyenMai" required autofocus />
-                </div>
-                <div class="field mb-3">
-                    <label for="baoHanh">Bảo hành</label>
-                    <input type="text" pInputText id="baoHanh" [(ngModel)]="sanpham.baoHanh" required autofocus />
-                </div>
-                <div class="field mb-3">
-                    <label for="moTa">Mô tả</label>
-                    <p-editor [(ngModel)]="sanpham.moTa" [style]="{ height: '320px' }"></p-editor>
-                </div>
-                <div pFocusTrap class="flex flex-wrap ">
-                    <div class="field mb-3 p-1 w-6">
-                        <label for="baoHanh">Loại sản phẩm</label>
-                        <p-dropdown [options]="loai" [(ngModel)]="selectedLoaiId" optionLabel="name" [filter]="true"
-                            filterBy="name">
-                        </p-dropdown>
-                    </div>
-                    <div class="field mb-3 p-1 w-6">
-                        <label for="baoHanh">Hãng sản phẩm</label>
-                        <p-dropdown [options]="hang" [(ngModel)]="selectedHangId" optionLabel="name" [filter]="true"
-                            filterBy="name">
-                        </p-dropdown>
-                    </div>
-                </div>
-                <div class="field mb-3">
-                    <label for="trangThaiSanPham">Trạng thái sản phẩm</label>
-                    <p-dropdown [options]="status" id="trangThaiSanPham" [(ngModel)]="selectStatus"
+                    <label for="trangThaihoadonnhap">Trạng thái sản phẩm</label>
+                    <p-dropdown [options]="status" id="trangThaihoadonnhap" [(ngModel)]="selectStatus"
                         optionLabel="name"></p-dropdown>
                 </div>
-                <div class="field mb-3">
-                    <label for="trangThai">Trạng thái</label>
-                    <p-dropdown [options]="actions" id="trangThai" [(ngModel)]="selectAction"
-                        optionLabel="name"></p-dropdown>
-                </div>
-                <div class="field mb-3">
-                    <label for="duongDanAnh">Ảnh chi tiết sản phẩm</label>
-                    <div>
-                        <input type="file" id="fileInput" (change)="onFilesSelected($event)" multiple />
-                        <label for="fileInput" class="file-upload-btn">Tải ảnh</label>
-                    </div>
-                    <div *ngIf="selectedFiles && selectedFiles.length > 0" class="file-selected">
-                        <p>Danh sách ảnh:</p>
-                        <ng-container *ngIf="shouldDisplayImage">
-                            <ul style="list-style: none; display: flex; flex-wrap: wrap;">
-                                <li *ngFor="let file of selectedFiles"
-                                    style="box-sizing: border-box; padding: 15px; text-align: center; ">
-                                    <img width="150px" src="assets/Uploads/products/{{ file.name }}" alt="">
-                                </li>
-                            </ul>
-                        </ng-container>
-                        <ng-container *ngIf="!shouldDisplayImage">
-                            <ul style="list-style: none; ">
-                                <li *ngFor="let file of selectedFiles">
-                                    {{ file.name }}
-                                </li>
-                            </ul>
-                        </ng-container>
-                    </div>
-                </div>
 
-                <div class="field mb-3" *ngFor="let parameter of productParameters; let i = index">
-                    <label class="mb-4" for="">Thông số sản phẩm {{ i + 1 }}</label>
+                <div class="field mb-3" *ngFor="let parameter of orderDetail; let i = index">
+                    <label class="mb-5" for="">Chi tiết hóa đơn {{ i + 1 }}</label>
                     <span class="p-float-label mb-4">
-                        <p-autoComplete [(ngModel)]="parameter.tenThongSo" inputId="float-label"></p-autoComplete>
-                        <label for="float-label">Tên thông số</label>
+                        <p-dropdown [options]="sanpham" [(ngModel)]="parameter.selectedSanPhamId" optionLabel="name"
+                            [filter]="true" filterBy="name">
+                        </p-dropdown>
+                        <label for="float-label">Sản phẩm</label>
                     </span>
                     <span class="p-float-label mb-4">
-                        <p-autoComplete [(ngModel)]="parameter.moTa" inputId="float-label"></p-autoComplete>
-                        <label for="float-label">Mô tả</label>
+                        <p-autoComplete [(ngModel)]="parameter.soLuongNhap" inputId="float-label"></p-autoComplete>
+                        <label for="float-label">Số lượng nhập</label>
+                    </span>
+                    <span class="p-float-label mb-4">
+                        <p-autoComplete [(ngModel)]="parameter.giaNhap" inputId="float-label"></p-autoComplete>
+                        <label for="float-label">Giá nhập</label>
                     </span>
                 </div>
                 <div class="flex flex-wrap gap-3">
                     <p-button [style]="{background: '#fff', color: '#1D4E89', 'border': '1px solid #1D4E89'}"
-                        icon="pi pi-plus" (click)="addProductParameter()" label="Thêm thông số"></p-button>
+                        icon="pi pi-plus" (click)="addProductOrder()" label="Thêm thông số"></p-button>
                     <p-button [style]="{background: '#fff', color: '#EF4444', border: '1px solid #BB0000'}"
-                        icon="pi pi-trash" label="Xóa thông số" (click)="removeProductParameter(i)"></p-button>
+                        icon="pi pi-trash" label="Xóa thông số" (click)="removeProductOrder(i)"></p-button>
                 </div>
             </ng-template>
 
@@ -231,7 +146,7 @@
         <p-confirmDialog [style]="{ width: '450px', }"></p-confirmDialog>
 
         <!-- Ảnh sản phẩm -->
-        <p-dialog [(visible)]="DialogImg" [style]="{ width: '75vw' }" [header]="titleImg" [modal]="true"
+        <!-- <p-dialog [(visible)]="DialogImg" [style]="{ width: '75vw' }" [header]="titleImg" [modal]="true"
             (onHide)="onDialogHide()" styleClass="p-fluid">
             <div class="col-12">
                 <div class="card">
@@ -265,8 +180,8 @@
                                 <th class="text-center" style="width: 4rem;">
                                     <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
                                 </th>
-                                <th class="text-center" pSortableColumn="tenSanPham">Sản phẩm<p-sortIcon
-                                        field="tenSanPham"></p-sortIcon>
+                                <th class="text-center" pSortableColumn="tenhoadonnhap">Sản phẩm<p-sortIcon
+                                        field="tenhoadonnhap"></p-sortIcon>
                                 </th>
                                 <th class="text-center" pSortableColumn="giaBan">Ảnh sản phẩm<p-sortIcon
                                         field="giaBan"></p-sortIcon>
@@ -282,7 +197,7 @@
                                 <td class="text-center">
                                     <p-tableCheckbox [value]="anh"></p-tableCheckbox>
                                 </td>
-                                <td class="text-center">{{ anh.sanPhamName }}</td>
+                                <td class="text-center">{{ anh.hoadonnhapName }}</td>
                                 <td class="text-center">
                                     <img width="200px" src="assets/Uploads/products/{{ anh.duongDanAnh }}" alt="">
 
@@ -340,10 +255,10 @@
                 <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="saveImg()"
                     (click)="onUploadImg()"></button>
             </ng-template>
-        </p-dialog>
+        </p-dialog> -->
 
         <!-- Thông số sản phẩm -->
-        <p-dialog [(visible)]="DialogParameter" [style]="{ width: '75vw' }" [header]="titleParameter" [modal]="true"
+        <!-- <p-dialog [(visible)]="DialogParameter" [style]="{ width: '75vw' }" [header]="titleParameter" [modal]="true"
             (onHide)="onDialogHide()" styleClass="p-fluid">
             <div class="col-12">
                 <div class="card">
@@ -398,7 +313,7 @@
                                 <td class="text-center">
                                     <p-tableCheckbox [value]="thongso"></p-tableCheckbox>
                                 </td>
-                                <td class="text-center">{{ thongso.sanPhamName }}</td>
+                                <td class="text-center">{{ thongso.hoadonnhapName }}</td>
                                 <td class="text-center">{{ thongso.tenThongSo }}</td>
                                 <td class="text-center">{{ thongso.moTa }}</td>
                                 <td class="text-center">
@@ -422,8 +337,8 @@
                     </p-table>
                 </div>
             </div>
-        </p-dialog>
-
+        </p-dialog> -->
+        <!-- 
         <p-dialog [(visible)]="DialogParameterDetail" [style]="{ width: '1050px' }" [header]="titleParameter"
             [modal]="true" styleClass="p-fluid">
             <ng-template pTemplate="content">
@@ -450,7 +365,7 @@
                 <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text"
                     (click)="saveParameter()"></button>
             </ng-template>
-        </p-dialog>
+        </p-dialog> -->
 
     </div>
 </div>

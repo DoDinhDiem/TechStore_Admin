@@ -25,8 +25,8 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Loại sản phẩm', icon: 'pi pi-fw pi-id-card', routerLink: ['/admin/loai'] },
                     { label: 'Hãng sản phẩm', icon: 'pi pi-fw pi-check-square', routerLink: ['/admin/hang'] },
+                    { label: 'Nhà cung cấp', icon: 'pi pi-fw pi-globe', routerLink: ['/admin/nhacungcap'] },
                     { label: 'Sản phẩm', icon: 'pi pi-fw pi-bookmark', routerLink: ['/admin/sanpham'] },
-
                 ]
             },
             {
@@ -41,12 +41,13 @@ export class AppMenuComponent implements OnInit {
                 items: [
                     { label: 'Nhân viên', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/nhanvien'] },
                     { label: 'Khách hàng', icon: 'pi pi-fw pi-globe', routerLink: ['/admin/khachhang'] },
+
                 ]
             },
             {
                 label: 'Hóa đơn',
                 items: [
-                    { label: 'Free Blocks', icon: 'pi pi-fw pi-eye', routerLink: ['/blocks'], badge: 'NEW' },
+                    { label: 'Hóa đơn nhập', icon: 'pi pi-fw pi-eye', routerLink: ['/admin/hoadonnhap'] },
                     { label: 'All Blocks', icon: 'pi pi-fw pi-globe', url: ['https://www.primefaces.org/primeblocks-ng'], target: '_blank' },
                 ]
             },
