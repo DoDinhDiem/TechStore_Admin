@@ -59,8 +59,8 @@ export class HoaDonNhapComponent {
         this.loadData();
 
         this.actions = [
-            { value: true, name: 'Hiện' },
-            { value: false, name: 'Ẩn' }
+            { value: true, name: 'Đã thanh toán' },
+            { value: false, name: 'Chưa thanh toán' }
         ]
     }
 
@@ -121,20 +121,23 @@ export class HoaDonNhapComponent {
 
     //Thêm sửa sản phẩm
     save() {
+
+        this.hoadonnhap.nhaCungCapId = this.selectedNhaCungCapId?.id;
+        this.hoadonnhap.trangThaiThanhToan = this.selectAction?.value;
         this.hoadonnhap.userId = Number(this.accontService.getUserId());
 
-        this.hoadonnhap.chiTietHoaDonNhap = [];
+        this.hoadonnhap.chiTietHoaDonNhaps = [];
         for (let i = 0; i < this.orderDetail.length; i++) {
             const order = this.orderDetail[i];
             const soLuong: number = Number(order.soLuongNhap);
             const giaNhap: number = Number(order.giaNhap);
             const chitiet = {
                 sanPhamId: order.selectedSanPhamId.id,
-                soLuong: order.soLuongNhap,
+                soLuongNhap: order.soLuongNhap,
                 giaNhap: order.giaNhap,
                 thanhTien: soLuong * giaNhap
             };
-            this.hoadonnhap.chiTietHoaDonNhap.push(chitiet);
+            this.hoadonnhap.chiTietHoaDonNhaps.push(chitiet);
         }
         this.submitted = true;
         this.hoadonnhapService.create(this.hoadonnhap).subscribe({

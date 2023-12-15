@@ -71,7 +71,7 @@
 
                         <td class="text-center">{{ hoadonnhap.userId }}</td>
                         <td class="text-center">{{ hoadonnhap.nhaCungCapId }}</td>
-                        <td class="text-center">{{ hoadonnhap.tongTien }}</td>
+                        <td class="text-center">{{ hoadonnhap.tongTien | number }}</td>
                         <td class="text-center">{{ hoadonnhap.trangThaiThanhToan }}</td>
                         <td class="text-center">
                             <p-accordion>
@@ -91,7 +91,7 @@
                 </ng-template>
                 <ng-template pTemplate="summary">
                     <div class="flex align-items-center justify-content-between">
-                        Tổng cộng có {{ hoadonnhaps ? hoadonnhaps.length : 0 }} sản phẩm.</div>
+                        Tổng cộng có {{ hoadonnhaps ? hoadonnhaps.length : 0 }} hóa đơn nhập.</div>
                 </ng-template>
             </p-table>
         </div>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="field mb-3">
                     <label for="trangThaihoadonnhap">Trạng thái sản phẩm</label>
-                    <p-dropdown [options]="status" id="trangThaihoadonnhap" [(ngModel)]="selectStatus"
+                    <p-dropdown [options]="actions" id="trangThaihoadonnhap" [(ngModel)]="selectAction"
                         optionLabel="name"></p-dropdown>
                 </div>
 
@@ -138,8 +138,8 @@
             <ng-template pTemplate="footer">
                 <button pButton pRipple label="Hủy" icon="pi pi-times" class="p-button-text"
                     (click)="hidenDialog()"></button>
-                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text" (click)="save()"
-                    (click)="onUpload()"></button>
+                <button pButton pRipple label="{{ Save }}" icon="pi pi-check" class="p-button-text"
+                    (click)="save()"></button>
             </ng-template>
         </p-dialog>
 

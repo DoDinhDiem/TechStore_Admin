@@ -4,7 +4,7 @@ export interface IHoaDonNhap {
     nhaCungCapId?: number;
     trangThaiThanhToan?: boolean;
     tongTien?: number;
-    chiTietHoaDonNhap?: {
+    chiTietHoaDonNhaps?: {
         sanPhamId?: number;
         soLuongNhap?: number;
         GiaNhap?: number;

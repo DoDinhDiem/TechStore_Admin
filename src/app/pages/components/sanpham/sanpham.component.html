@@ -18,7 +18,7 @@
             </p-toolbar>
 
             <p-table [value]="sanphams" [paginator]="true" [rows]="10"
-                [globalFilterFields]="['tenSanPham', 'giaBan', 'khuyenMai', 'soLuonTon', 'baoHanh','trangThaiHoatDong', 'createDate', 'updateDate']"
+                [globalFilterFields]="['tenSanPham', 'giaBan', 'khuyenMai', 'soLuongTon', 'baoHanh','trangThaiHoatDong', 'createDate', 'updateDate']"
                 [tableStyle]="{ 'min-width': '60rem' }" [(selection)]="selecteds" [rowHover]="true"
                 currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} mục"
                 [showCurrentPageReport]="true" [scrollable]="true">
